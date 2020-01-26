@@ -24,6 +24,11 @@ const App = () => {
     setDevelopers([...developers, response.data]);
   };
 
+  const onDelete = async (githubUsername) => {
+    await api.delete(`/developers/${githubUsername}`);
+    setDevelopers(developers.filter((developer) => developer.githubUsername !== githubUsername));
+  };
+
   return (
     <div id="app">
       <aside>
@@ -36,6 +41,7 @@ const App = () => {
             <DeveloperItem
               key={developer.githubUsername}
               developer={developer}
+              onDelete={onDelete}
             />
           ))}
         </ul>
