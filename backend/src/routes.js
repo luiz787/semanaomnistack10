@@ -7,6 +7,7 @@ const routes = Router();
 
 routes.get('/developers', DeveloperController.index);
 routes.post('/developers', DeveloperController.store);
+routes.delete('/developers/:githubUsername', DeveloperController.destroy);
 
 routes.get('/search', SearchController.index);
 

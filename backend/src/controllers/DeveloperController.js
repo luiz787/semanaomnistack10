@@ -55,4 +55,19 @@ module.exports = {
     sendMessage(sendSocketMessageTo, 'new-dev', developer);
     return response.json(developer);
   },
+
+  async destroy(request, response) {
+    const { githubUsername } = request.params;
+    await Developer.deleteOne({
+      githubUsername,
+    }, (err) => {
+      if (err) {
+        console.log(err);
+        response.status(500).json({
+          error: `Could not delete user ${githubUsername}`,
+        });
+      }
+    });
+    return response.status(204).send();
+  },
 };
