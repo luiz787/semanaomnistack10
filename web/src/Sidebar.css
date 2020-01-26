@@ -44,6 +44,10 @@ aside form .input-block input {
   border-bottom: 1px solid #eee;
 }
 
+aside form .input-block input:focus {
+  border-bottom: 1px solid #aaa;
+}
+
 aside form button[type=submit] {
   width: 100%;
   border: 0;
