@@ -1,5 +1,6 @@
 const axios = require('axios');
 const Developer = require('../models/Developer');
+const { findConnections, sendMessage } = require('../websocket');
 
 const fetchDeveloperData = async (githubUsername) => axios.get(`https://api.github.com/users/${githubUsername}`);
 
@@ -44,7 +45,14 @@ module.exports = {
         location,
       });
     }
-
+    const sendSocketMessageTo = findConnections(
+      {
+        latitude,
+        longitude,
+      },
+      technologies,
+    );
+    sendMessage(sendSocketMessageTo, 'new-dev', developer);
     return response.json(developer);
   },
 };
