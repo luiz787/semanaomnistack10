@@ -70,4 +70,36 @@ module.exports = {
     });
     return response.status(204).send();
   },
+
+  async update(request, response) {
+    const { githubUsername } = request.params;
+
+    const {
+      avatarUrl,
+      bio,
+      name,
+      technologies,
+      latitude,
+      longitude,
+    } = request.body;
+
+    const location = {
+      type: 'Point',
+      coordinates: [longitude, latitude],
+    };
+
+    const updatedDeveloper = await Developer.updateOne({
+      githubUsername,
+    }, {
+      avatarUrl,
+      bio,
+      name,
+      technologies,
+      location,
+    }, (err, raw) => {
+      console.log(err);
+      console.log(raw);
+    });
+    return response.json(updatedDeveloper);
+  },
 };
