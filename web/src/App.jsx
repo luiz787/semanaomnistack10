@@ -8,6 +8,8 @@ import './Main.css';
 import DeveloperItem from './components/DeveloperItem';
 import DeveloperForm from './components/DeveloperForm';
 
+const filterDevByName = (dev, githubUsername) => dev.githubUsername !== githubUsername;
+
 const App = () => {
   const [developers, setDevelopers] = useState([]);
 
@@ -24,9 +26,26 @@ const App = () => {
     setDevelopers([...developers, response.data]);
   };
 
+  const onEdit = async (developer) => {
+    const { githubUsername } = developer;
+    await api.put(`/developers/${githubUsername}`, developer);
+    const location = {
+      coordinates: [developer.longitude, developer.latitude],
+    };
+    const editedDeveloper = {
+      ...developer,
+      location,
+    };
+    const editedIndex = developers.findIndex((dev) => dev.githubUsername === githubUsername);
+    const newDeveloperList = [...developers.slice(0, editedIndex),
+      editedDeveloper, ...developers.slice(editedIndex + 1),
+    ];
+    setDevelopers(newDeveloperList);
+  };
+
   const onDelete = async (githubUsername) => {
     await api.delete(`/developers/${githubUsername}`);
-    setDevelopers(developers.filter((developer) => developer.githubUsername !== githubUsername));
+    setDevelopers(developers.filter((dev) => filterDevByName(dev, githubUsername)));
   };
 
   return (
@@ -42,6 +61,7 @@ const App = () => {
               key={developer.githubUsername}
               developer={developer}
               onDelete={onDelete}
+              onEdit={onEdit}
             />
           ))}
         </ul>

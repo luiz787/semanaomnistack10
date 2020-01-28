@@ -1,26 +1,31 @@
 li.dev-item {
+  display: flex;
   background-color: white;
   box-shadow: 0 0 14px 0 rgba(0, 0, 0, 0.02);
   border-radius: 2px;
   padding: 20px;
 }
 
+li.dev-item .dev-data {
+  flex: 1;
+}
+
+li.dev-item .actions {
+  display: flex;
+  flex-direction: column;
+}
+
 li.dev-item header {
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
 }
 
 li.dev-item header img {
   width: 54px;
   height: 54px;
   border-radius: 50%;
-}
-
-li.dev-item header .user-data {
-  display: flex;
-  flex-direction: row;
+  margin-right: 10px;
 }
 
 li.dev-item header .user-data .user-info {
